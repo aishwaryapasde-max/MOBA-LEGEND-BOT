@@ -1,13 +1,5 @@
-FROM python:3.9-slim
-
-# System dependencies for the bot
-RUN apt-get update && apt-get install -y \
-    xvfb \
-    && rm -rf /var/lib/apt/lists/*
-
+FROM python:3.11-slim
 WORKDIR /app
 COPY . .
-RUN pip install -r requirements.txt
-
-# Render par chalu karne ki command
-CMD xvfb-run gunicorn main:app
+RUN pip install --no-cache-dir -r requirements.txt
+CMD gunicorn main:app --bind 0.0.0.0:10000
